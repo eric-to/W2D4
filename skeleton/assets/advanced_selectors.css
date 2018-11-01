@@ -43,4 +43,23 @@ ol {
   font-weight: bold;
 }
 
+input[type="radio"], select, input[type="submit"] {
+  cursor: pointer;
+  outline: none;
+}
 
+input:last-child {
+  background-color: gold;
+}
+
+input:last-child:hover {
+  background-color: orange;
+}
+
+ol li:nth-of-type(2n) {
+  background-color: whitesmoke;
+}
+
+h2 + .user_review {
+  border-top: 1px solid black;
+}
