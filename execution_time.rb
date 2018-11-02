@@ -91,13 +91,92 @@ end
 
 # p best_sum(list)
 
-def first_anagram(str1, str2)
+def first_anagram?(str1, str2) 
+  make_anagrams(str1).include?(str2)
 end
 
-def make_anagrams(str)
-  return [[str]] if str.length <= 1
-  prev_anagrams = make_anagrams(str[1..-1])
-  prev_anagrams + prev_anagrams.map { |anagram| anagram + [str[0]] }
+def make_anagrams(string)
+  return [string] if string.length <= 1
+  prev_anagrams = make_anagrams(string[0...-1])
+  new_anagrams = []
+
+  prev_anagrams.each do |anagram|
+    (0..anagram.length).each do |i|
+      new_anagrams << anagram.dup.insert(i, string[-1])
+    end
+  end
+
+  new_anagrams
 end
 
-p make_anagrams("app")
+
+def permutations(str)
+  return [string] if string.size < 2
+  first_letter = str[0]
+end
+
+def second_anagram?(str1, str2) #o(n^2)
+  str1 = str1.chars
+  str2 = str2.chars
+  str1.each do |letter|
+    letter_idx = str2.find_index(letter)
+    str2.delete_at(letter_idx)
+  end
+  str2 == []
+end
+
+def third_anagram?(str1, str2) #o(n * log n)
+  str1.chars.sort == str2.chars.sort
+end
+
+def fourth_anagram?(str1, str2) #o(n)
+  ltr_counts = Hash.new(0)
+  
+  str1.chars.each do |i|
+    ltr_counts[i] += 1
+  end
+  
+  str2.chars.each do |i|
+    ltr_counts[i] -= 1
+  end
+  
+  ltr_counts.values.all? {|val| val.zero? }
+
+end
+
+# p fourth_anagram?('elvis', 'lives')
+
+def brute_force(arr, target)
+  arr.each_index do |i|
+    arr.each_index do |j|
+      next if i == j
+      if arr[i] + arr[j] == target
+        return true
+      end
+    end
+  end
+  false
+end
+
+def hash_map(arr, target)
+  hash = Hash.new(false)
+  arr.each do |i|
+    diff = target - i
+    if hash[diff]
+      return true
+    else
+      hash[i] = true
+    end
+  end
+  false
+end
+
+arr = [0, 1, 5, 7]
+p hash_map(arr, 6) # => should be true
+p hash_map(arr, 10) # => should be false
+
+
+
+
+
+
